@@ -1,0 +1,50 @@
+{
+  "configurations": [
+    {
+      "name": "ST-Link: Debug Bootloader",
+      "cwd": "${workspaceFolder}/bootloader",
+      "executable": "./bootloader.elf",
+      "servertype": "stutil",
+      "request": "launch",
+      "type": "cortex-debug",
+      "device": "STM32F401xB_xC",
+      "interface": "swd",
+      "runToEntryPoint": "main",
+      "preLaunchTask": "build_bootloader_debug"
+    },
+    {
+      "name": "ST-Link: Debug Application",
+      "cwd": "${workspaceFolder}/firmware",
+      "executable": "./firmware.elf",
+      "servertype": "stutil",
+      "request": "launch",
+      "type": "cortex-debug",
+      "device": "STM32F401xB_xC",
+      "runToEntryPoint": "main",
+      "interface": "swd",
+      "preLaunchTask": "build_firmware_debug"
+    },
+    {
+      "name": "ST-Link: Attach to Bootloader",
+      "cwd": "${workspaceFolder}/bootloader",
+      "executable": "./bootloader.elf",
+      "servertype": "stutil",
+      "request": "attach",
+      "type": "cortex-debug",
+      "device": "STM32F401xB_xC",
+      "runToEntryPoint": "main",
+      "interface": "swd"
+    },
+    {
+      "name": "ST-Link: Attach to Application",
+      "cwd": "${workspaceFolder}/firmware",
+      "executable": "./firmware.elf",
+      "servertype": "stutil",
+      "request": "attach",
+      "type": "cortex-debug",
+      "device": "STM32F401xB_xC",
+      "runToEntryPoint": "main",
+      "interface": "swd"
+    }
+  ]
+}
