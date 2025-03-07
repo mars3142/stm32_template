@@ -48,7 +48,7 @@ GDB			:= $(PREFIX)gdb
 STFLASH		= $(shell which st-flash)
 OPT			:= -Os
 DEBUG		:= -ggdb3
-CSTD		?= -std=c99
+CSTD		?= -std=c17
 
 
 ###############################################################################
