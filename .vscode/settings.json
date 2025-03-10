@@ -14,7 +14,10 @@
     "gpio.h": "c",
     "rcc.h": "c",
     "stdint.h": "c",
-    "stdbool.h": "c"
+    "stdbool.h": "c",
+    "common.h": "c",
+    "nvic.h": "c",
+    "memorymap.h": "c"
   },
   "cortex-debug.variableUseNaturalFormat": true
 }
