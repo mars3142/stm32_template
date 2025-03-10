@@ -46,8 +46,12 @@ OBJCOPY		:= $(PREFIX)objcopy
 OBJDUMP		:= $(PREFIX)objdump
 GDB			:= $(PREFIX)gdb
 STFLASH		= $(shell which st-flash)
+ifeq ($(V),42)
+OPT			:= -O0
+else
 OPT			:= -Os
-DEBUG		:= -ggdb3
+endif
+endifDEBUG		:= -ggdb3
 CSTD		?= -std=c17
 
 
@@ -170,7 +174,7 @@ print-%:
 	$(Q)$(CXX) $(TGT_CXXFLAGS) $(CXXFLAGS) $(TGT_CPPFLAGS) $(CPPFLAGS) -o $(*).o -c $(*).cpp
 
 clean:
-	@printf "  CLEAN\n"
+	@printf "  CLEAN   $(BINARY)\n"
 	$(Q)$(RM) $(GENERATED_BINARIES) generated.* $(OBJS) $(OBJS:%.o=%.d)
 
 
