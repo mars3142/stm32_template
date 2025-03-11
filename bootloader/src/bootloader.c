@@ -1,4 +1,3 @@
-#include <stdint.h>
 #include <libopencm3/cm3/systick.h>
 #include <libopencm3/cm3/vector.h>
 #include <libopencm3/stm32/rcc.h>
@@ -9,7 +8,7 @@
 #define CPU_FREQ     (RCC_CLOCK_3V3_84MHZ)
 #define SYSTICK_FREQ (1000)
 
-typedef uint64_t ticks_t;
+typedef uint32_t ticks_t;
 
 volatile ticks_t ticks = 0;
 void sys_tick_handler(void) {
@@ -47,6 +46,8 @@ int main(void) {
     ticks_t start_time = get_ticks();
     while(true) {
         if(get_ticks() - start_time >= SYSTICK_FREQ * 5) {
+            systick_counter_disable();
+            systick_interrupt_disable();
             jump_to_main();
         }
     }
