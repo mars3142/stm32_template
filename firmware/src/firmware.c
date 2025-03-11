@@ -4,7 +4,6 @@
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/stm32/timer.h>
-
 #include "firmware.h"
 
 #define BOOTLOADER_SIZE (0x8000U)
@@ -16,43 +15,42 @@ static void vector_setup(void) {
 static void gpio_setup(void) {
     rcc_periph_clock_enable(RCC_GPIOC);
     gpio_mode_setup(LED_PORT, GPIO_MODE_OUTPUT, GPIO_PUPD_NONE, LED_PIN);
-}
-
-static void nvic_setup(void) {
-    /* Without this the timer interrupt routine will never be called. */
-    nvic_enable_irq(NVIC_TIM2_IRQ);
-    nvic_set_priority(NVIC_TIM2_IRQ, 1);
+    gpio_get(LED_PORT, LED_PIN);
 }
 
 void tim2_isr(void) {
     gpio_toggle(LED_PORT, LED_PIN); /* LED on/off. */
-    TIM_SR(TIM2) &= ~TIM_SR_UIF; /* Clear interrrupt flag. */
+    if(timer_interrupt_source(TIM2, TIM_DIER_UIE)) {
+        // timer_clear_flag(TIM2, TIM_SR_UIF); /* Clear interrrupt flag. - see https://github.com/libopencm3/libopencm3/issues/1556 */
+        TIM_SR(TIM2) &= ~TIM_SR_UIF; /* Clear interrrupt flag. */
+    }
 }
 
-static void timer_setup(void) {
+static void tim_setup(void) {
+    /* Without this the timer interrupt routine will never be called. */
+    nvic_enable_irq(NVIC_TIM2_IRQ);
+    nvic_set_priority(NVIC_TIM2_IRQ, 1);
+
     rcc_periph_clock_enable(RCC_TIM2);
 
     /* Set timer start value. */
-    TIM_CNT(TIM2) = 1;
+    timer_set_counter(TIM2, 1);
 
-    /* Set timer prescaler. 84MHz/1680 => 50000 counts per second. */
-    TIM_PSC(TIM2) = 1680;
-
-    /* End timer value. If this is reached an interrupt is generated. */
-    TIM_ARR(TIM2) = 50000;
+    /* Set timer prescaler and periode. 84MHz/1680 => 50000 counts per second. */
+    timer_set_prescaler(TIM2, 1680);
+    timer_set_period(TIM2, 50000);
 
     /* Update interrupt enable. */
-    TIM_DIER(TIM2) |= TIM_DIER_UIE;
+    timer_enable_irq(TIM2, TIM_DIER_UIE);
 
     /* Start timer. */
-    TIM_CR1(TIM2) |= TIM_CR1_CEN;
+    timer_enable_counter(TIM2);
 }
 
 int main(void) {
     vector_setup();
     gpio_setup();
-    nvic_setup();
-    timer_setup();
+    tim_setup();
 
     while(true)
         ;
