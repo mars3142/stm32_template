@@ -5,20 +5,8 @@
   "tasks": [
     {
       "type": "shell",
-      "label": "build_bootloader_debug",
-      "options": {
-        "cwd": "bootloader"
-      },
-      "command": "make bin",
-      "problemMatcher": "$gcc"
-    },
-    {
-      "type": "shell",
-      "label": "build_firmware_debug",
-      "options": {
-        "cwd": "firmware"
-      },
-      "command": "make bin",
+      "label": "build_debug",
+      "command": "make debug",
       "problemMatcher": "$gcc"
     }
   ]
