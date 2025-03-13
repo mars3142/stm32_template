@@ -51,7 +51,7 @@ OPT			:= -O0
 else
 OPT			:= -Os
 endif
-endifDEBUG		:= -ggdb3
+DEBUG		:= -ggdb3
 CSTD		?= -std=c17
 
 
