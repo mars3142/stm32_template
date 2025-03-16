@@ -5,5 +5,10 @@
 
 #pragma once
 
+#ifdef STM32F446RE_NUCLEO
+#define LED_PORT (GPIOA)
+#define LED_PIN  (GPIO5)
+#else
 #define LED_PORT (GPIOC)
 #define LED_PIN  (GPIO13)
+#endif

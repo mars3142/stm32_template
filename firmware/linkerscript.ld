@@ -21,7 +21,7 @@
 /* Define memory regions. */
 MEMORY
 {
-	rom (rx)  : ORIGIN = 0x08008000, LENGTH = 224K
+	rom (rx)  : ORIGIN = 0x08008000, LENGTH = DEFINED(STM32F446RE_NUCLEO) ? 480K : 224K
 	ram (rwx) : ORIGIN = 0x20000000, LENGTH = 64K
 }
 

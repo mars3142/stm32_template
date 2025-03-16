@@ -1,7 +1,7 @@
 all: clean
 	@make -C libopencm3 build -j 12
-	@make -C bootloader all
-	@make -C firmware all
+	@make -C bootloader all -j 12
+	@make -C firmware all -j 12
 
 debug: clean
 	@make -C libopencm3 build -j 12

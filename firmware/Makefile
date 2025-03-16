@@ -59,6 +59,7 @@ CSTD		?= -std=c17
 # Source files
 
 OBJS		+= $(SRC_DIR)/$(BINARY).o
+OBJS		+= $(SRC_DIR)/blink.o
 
 ###############################################################################
 # C flags

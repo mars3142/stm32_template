@@ -47,9 +47,9 @@ OBJDUMP		:= $(PREFIX)objdump
 GDB			:= $(PREFIX)gdb
 STFLASH		= $(shell which st-flash)
 ifeq ($(V),42)
-OPT			:= -O0
+OPT			:= -O0 -g3
 else
-OPT			:= -Os
+OPT			:= -Os -g3
 endif
 DEBUG		:= -ggdb3
 CSTD		?= -std=c17
