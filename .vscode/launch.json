@@ -2,8 +2,8 @@
   "configurations": [
     {
       "name": "ST-Util: Debug",
-      "cwd": "${workspaceFolder}/bootloader",
-      "executable": "./bootloader.elf",
+      "cwd": "${workspaceFolder}",
+      "executable": "./bootloader/bootloader.elf",
       "loadFiles": [
         "${workspaceFolder}/bootloader/bootloader.elf",
         "${workspaceFolder}/firmware/firmware.elf"
@@ -14,7 +14,11 @@
       "device": "STM32F401xB_xC",
       "interface": "swd",
       "runToEntryPoint": "main",
-      "preLaunchTask": "build_debug"
+      "preLaunchTask": "build_debug",
+      "showDevDebugOutput": "raw",
+      "preLaunchCommands": [
+        "add-symbol-file ${workspaceFolder}/firmware/firmware.elf"
+      ]
     },
     {
       "name": "ST-Util: Attach",
