@@ -17,3 +17,8 @@ clean:
 
 doc:
 	@make -C libopencm3/doc clean doc
+
+deploy: all
+	@st-info --probe
+	@st-flash write bootloader/bootloader.bin 0x08000000
+	@st-flash --reset write firmware/firmware.bin 0x08008000
