@@ -6,6 +6,7 @@
 #include <libopencm3/cm3/systick.h>
 #include <libopencm3/cm3/vector.h>
 #include <libopencm3/stm32/rcc.h>
+#include <libopencm3/cm3/scb.h>
 
 #define BOOTLOADER_SIZE        (0x8000U)
 #define MAIN_APP_START_ADDRESS (FLASH_BASE + BOOTLOADER_SIZE)
@@ -22,6 +23,10 @@ void sys_tick_handler(void) {
 
 static ticks_t get_ticks(void) {
     return ticks;
+}
+
+static ticks_t get_delay_ticks(ticks_t sec) {
+    return sec * SYSTICK_FREQ;
 }
 
 static void rcc_setup(void) {
@@ -41,6 +46,8 @@ static void jump_to_main(void) {
     uint32_t* reset_vector = (uint32_t*)(*reset_vector_entry);
 
     void_fn firmware_main = (void_fn)reset_vector;
+
+    SCB_VTOR = BOOTLOADER_SIZE; // reset vector table
     firmware_main();
 }
 
@@ -50,7 +57,7 @@ int main(void) {
 
     ticks_t start_time = get_ticks();
     while(true) {
-        if(get_ticks() - start_time >= SYSTICK_FREQ * 5) {
+        if(get_ticks() - start_time >= get_delay_ticks(5)) {
             systick_counter_disable();
             systick_interrupt_disable();
             jump_to_main();

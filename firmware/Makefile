@@ -8,6 +8,7 @@ endif
 SRC_DIR     = src
 INC_DIR     = include
 OPENCM3_DIR = ../libopencm3
+FREERTOS_DIR = ../freertos
 
 BINARY = firmware
 
@@ -30,6 +31,7 @@ LDFLAGS		+= -L$(OPENCM3_DIR)/lib
 # Includes
 
 DEFS		+= -I$(OPENCM3_DIR)/include
+DEFS		+= -I$(FREERTOS_DIR)/include
 DEFS		+= -I$(INC_DIR)
 
 ###############################################################################
