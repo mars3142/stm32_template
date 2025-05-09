@@ -5,10 +5,10 @@ Q			:= @
 NULL		:= 2>/dev/null
 endif
 
-SRC_DIR     = src
-INC_DIR     = include
-OPENCM3_DIR = ../libopencm3
-FREERTOS_DIR = ../freertos
+SRC_DIR      = src
+INC_DIR      = include
+OPENCM3_DIR  = ../libs/libopencm3
+FREERTOS_DIR = ../libs/freertos
 
 BINARY = firmware
 

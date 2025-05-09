@@ -7,7 +7,7 @@ endif
 
 SRC_DIR     = src
 INC_DIR     = include
-OPENCM3_DIR = ../libopencm3
+OPENCM3_DIR = ../libs/libopencm3
 
 BINARY = bootloader
 

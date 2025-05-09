@@ -1,22 +1,22 @@
 all: clean
-	@make -C libopencm3 build -j 12
+	@make -C libs/libopencm3 build -j 12
 	@make -C bootloader all -j 12
 	@make -C firmware all -j 12
 
 debug: clean
-	@make -C libopencm3 build -j 12
+	@make -C libs/libopencm3 build -j 12
 	@make -C bootloader all V=42
 	@make -C firmware all V=42
 
 cleanall: clean
-	@make -C libopencm3 clean
+	@make -C libs/libopencm3 clean
 	
 clean:
 	@make -C bootloader clean
 	@make -C firmware clean
 
 doc:
-	@make -C libopencm3/doc clean doc
+	@make -C libs/libopencm3/doc clean doc
 
 deploy: all
 	@st-info --probe
